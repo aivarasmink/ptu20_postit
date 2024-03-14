@@ -11,6 +11,7 @@ https://docs.djangoproject.com/en/5.0/ref/settings/
 """
 
 from pathlib import Path
+import os
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
@@ -25,8 +26,7 @@ SECRET_KEY = 'django-insecure-6w4+00$q3he5mw=ry4+p$3$s9qb5p_9r+h)g*pxt%9cwzvb4s5
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = []
-
+ALLOWED_HOSTS = ['localhost', '127.0.0.1', 'ptu20.postit']
 
 # Application definition
 
@@ -72,17 +72,23 @@ TEMPLATES = [
 
 WSGI_APPLICATION = 'ptu20_postit.wsgi.application'
 
-
 # Database
 # https://docs.djangoproject.com/en/5.0/ref/settings/#databases
 
 DATABASES = {
+    # 'default': {
+    #     'ENGINE': 'django.db.backends.sqlite3',
+    #     'NAME': BASE_DIR / 'db.sqlite3',
+    # }
     'default': {
-        'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': BASE_DIR / 'db.sqlite3',
+        'ENGINE': 'django.db.backends.postgresql',
+        'HOST': 'postgres',
+        'NAME': os.getenv('POSTGRES_DB', 'ptu20postit'),
+        'USER': os.getenv('POSTGRES_USER', 'ptu20'),
+        'PASSWORD': os.getenv('POSTGRES_PASSWORD', ''),
+        'PORT': os.getenv('POSTGRES_PORT', 5432),
     }
 }
-
 
 # Password validation
 # https://docs.djangoproject.com/en/5.0/ref/settings/#auth-password-validators
